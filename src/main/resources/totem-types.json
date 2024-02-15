@@ -1,0 +1,13 @@
+[
+  {
+    "id": "totem:totem_of_fire",
+    "settings": "totem:fire_totem_settings",
+    "item": {
+      "item_type": "TOTEM_OF_UNDYING",
+      "name": "<color:#FF5722>Totem Of Fire",
+      "lore": [
+        "<color:gray>sure to save you even from the depths of hell"
+      ]
+    }
+  }
+]

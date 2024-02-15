@@ -1,0 +1,22 @@
+[
+  {
+    "id": "totem:fire_totem_settings",
+    "damage-types": [
+      "in_fire",
+      "hot_floor",
+      "lava"
+    ],
+    "given-effects": [
+      {
+        "type": "fire_resistance",
+        "duration": 1200,
+        "amplifier": 1,
+        "ambient": true,
+        "particles": true,
+        "icon": true
+      }
+    ],
+    "particle": "totem_of_undying",
+    "standard-effects": true
+  }
+]
