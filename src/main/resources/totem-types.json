@@ -4,9 +4,32 @@
     "settings": "totem:fire_totem_settings",
     "item": {
       "item_type": "TOTEM_OF_UNDYING",
-      "name": "<color:#FF5722>Totem Of Fire",
+      "name": "<italic:!><gradient:#E0AD20:#EE4432>Totem of Fire",
       "lore": [
-        "<color:gray>sure to save you even from the depths of hell"
+        "<color:gray>as death consumes you your skin will harden and the pain will fade"
+      ]
+    }
+  },
+  {
+    "id": "totem:totem_of_water",
+    "settings": "totem:water_totem_settings",
+    "item": {
+      "item_type": "TOTEM_OF_UNDYING",
+      "name": "<italic:!><gradient:#464BB3:#6DE0ED>Totem of Water",
+      "lore": [
+        "<color:gray>on the brink of death you will feel your lungs fill with air"
+      ]
+    }
+  },
+  {
+    "id": "totem:totem_of_magic",
+    "settings": "totem:magic_totem_settings",
+    "items": {
+      "item_type": "TOTEM_OF_UNDYING",
+      "name": "<italic:!><gradient:#AF0587:#FF0051>Totem of Magic",
+      "lore": [
+        "<color:gray>undoubtedly even an experienced mage will expect you to recover with such wounds.",
+        "<color:gray>you may feel a cloak form around you to protect you from their vision"
       ]
     }
   }

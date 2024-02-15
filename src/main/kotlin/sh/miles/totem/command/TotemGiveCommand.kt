@@ -5,29 +5,37 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import sh.miles.pineapple.command.Command
 import sh.miles.pineapple.command.CommandLabel
+import sh.miles.totem.TotemConfig
 import sh.miles.totem.registry.TotemTypeRegistry
 
 internal class TotemGiveCommand : Command(CommandLabel("give", "totem.command.give")) {
 
     override fun execute(sender: CommandSender, args: Array<out String>): Boolean {
         if (sender !is Player) {
-            sender.sendMessage("Only players can send this command")
+            sender.spigot().sendMessage(TotemConfig.PLAYER_ONLY_COMMAND.component())
             return true;
         }
 
         if (args.isEmpty()) {
-            sender.sendMessage("/totem give <totem-type>")
+            sender.spigot().sendMessage(TotemConfig.TOTEM_GIVE_USAGE.component())
             return true;
         }
 
         val totemType = TotemTypeRegistry.get(NamespacedKey.fromString(args[0])!!)
         if (totemType.isEmpty) {
-            sender.sendMessage("that totem type doesn't exist")
+            sender.spigot().sendMessage(TotemConfig.TOTEM_TYPE_NOT_EXISTS.component(mapOf("totem-type" to args[0])))
             return true;
         }
 
         sender.inventory.addItem(totemType.orElseThrow().item())
-        sender.sendMessage("Given totem")
+        sender.spigot().sendMessage(
+            TotemConfig.TOTEM_GIVE_SUCCESS.component(
+                mapOf(
+                    "totem-type" to args[0],
+                    "player-name" to sender.displayName,
+                )
+            )
+        )
         return true;
     }
 

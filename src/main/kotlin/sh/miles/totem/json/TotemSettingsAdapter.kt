@@ -38,7 +38,6 @@ object TotemSettingsAdapter : JsonAdapter<TotemSettings> {
             id,
             damageTypes.toList(),
             givenEffects.toList(),
-            context.deserialize(parent.get("particle"), Particle::class.java),
             standardEffects
         )
     }

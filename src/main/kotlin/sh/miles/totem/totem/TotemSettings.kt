@@ -11,7 +11,6 @@ data class TotemSettings(
     private val key: NamespacedKey,
     val blockedType: List<DamageType>,
     val givenEffects: List<PotionEffect>,
-    val particleType: Particle,
     val standardEffects: Boolean
 ) : RegistryKey<NamespacedKey> {
     override fun getKey(): NamespacedKey {

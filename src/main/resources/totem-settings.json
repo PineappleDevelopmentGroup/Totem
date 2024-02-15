@@ -10,13 +10,50 @@
       {
         "type": "fire_resistance",
         "duration": 1200,
-        "amplifier": 1,
+        "amplifier": 0,
         "ambient": true,
         "particles": true,
         "icon": true
       }
     ],
-    "particle": "totem_of_undying",
     "standard-effects": true
+  },
+  {
+    "id": "totem:water_totem_settings",
+    "damage-types": [
+      "drown"
+    ],
+    "given-effects": [
+      {
+        "type": "water_breathing",
+        "duration": 2400
+      }
+    ]
+  },
+  {
+    "id": "totem:magic_totem_settings",
+    "damage-types": [
+      "indirect_magic",
+      "magic",
+      "sonic_boom",
+      "wither_skull"
+    ],
+    "given-effects": [
+      {
+        "type": "regeneration",
+        "duration": 250,
+        "amplifier": 2
+      },
+      {
+        "type": "resistance",
+        "duration": 600,
+        "amplifier": 2
+      },
+      {
+        "type": "invisibility",
+        "duration": 1200
+      }
+    ],
+    "standard-effects": false
   }
 ]

@@ -15,6 +15,7 @@ import sh.miles.totem.json.keyed.PotionEffectTypeAdapter
 import sh.miles.totem.listener.EntityDamageListener
 import sh.miles.totem.registry.TotemSettingsRegistry
 import sh.miles.totem.registry.TotemTypeRegistry
+import java.io.File
 
 class TotemPlugin : JavaPlugin() {
     companion object {
@@ -35,6 +36,7 @@ class TotemPlugin : JavaPlugin() {
         plugin = this
         PineappleLib.initialize(this, true)
         saveResources()
+        PineappleLib.getConfigurationManager().createStaticReloadable(File(dataFolder, "config.yml"), TotemConfig::class.java)
 
         val commands = CommandRegistry(this)
         commands.register(TotemCommand())
