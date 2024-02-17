@@ -20,22 +20,16 @@ class EntityDamageListener : Listener {
             return
         }
 
-        println("before has totem check")
         if (!TotemType.hasTotemType(entity)) return
-        println("passed has totem check")
 
         val damageSource = event.damageSource
         val totem = TotemType.getType(entity)
         totem.ifPresent { totemType ->
-            println("totem type is present")
             if (totemType.settings.blockedType.contains(damageSource.damageType)) {
-                println("blocked damage is allowed")
                 if (totemType.trigger(entity, true)) event.isCancelled = true
-                println("event cancellation status ${event.isCancelled}")
             }
 
             if (!event.isCancelled) {
-                println("No protection granted")
                 noSavior.add(entity.uniqueId)
             }
         }
@@ -44,7 +38,6 @@ class EntityDamageListener : Listener {
     @EventHandler
     fun onEntityAttemptResurrect(event: EntityResurrectEvent) {
         if (noSavior.contains(event.entity.uniqueId)) {
-            println("The Gods decided not protect this entity")
             event.isCancelled = true
             noSavior.remove(event.entity.uniqueId)
         }

@@ -24,12 +24,23 @@
   {
     "id": "totem:totem_of_magic",
     "settings": "totem:magic_totem_settings",
-    "items": {
+    "item": {
       "item_type": "TOTEM_OF_UNDYING",
       "name": "<italic:!><gradient:#AF0587:#FF0051>Totem of Magic",
       "lore": [
-        "<color:gray>undoubtedly even an experienced mage will expect you to recover with such wounds.",
+        "<color:gray>undoubtedly even an experienced mage won't expect you to recover with such wounds.",
         "<color:gray>you may feel a cloak form around you to protect you from their vision"
+      ]
+    }
+  },
+  {
+    "id": "totem:totem_of_gravity",
+    "settings": "totem:gravity_totem_settings",
+    "item": {
+      "item_type": "TOTEM_OF_UNDYING",
+      "name": "<italic:!><gradient:#031CE3:#2EFF00>Totem of Gravity",
+      "lore": [
+        "<color:gray>gravity is not forgiving, but this just once it will let you continue on your journey"
       ]
     }
   }

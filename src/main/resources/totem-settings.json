@@ -55,5 +55,14 @@
       }
     ],
     "standard-effects": false
+  },
+  {
+    "id": "totem:gravity_totem_settings",
+    "damage-types": [
+      "fall",
+      "falling_anvil",
+      "falling_block",
+      "falling_stalactite"
+    ]
   }
 ]
