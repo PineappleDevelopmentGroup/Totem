@@ -10,9 +10,9 @@ val debugLibraries = true
 
 repositories {
     mavenCentral()
-    maven { url = uri("https://maven.miles.sh/libraries") }
-    maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
-    maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
+    maven("https://maven.miles.sh/libraries")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://repo.papermc.io/repository/maven-public/")
 }
 
 dependencies {
@@ -38,8 +38,8 @@ tasks.shadowJar {
     archiveFileName = "${project.name}-${project.version}.jar"
 
     val packageName = "${project.group}.${project.name.lowercase()}"
-    this.relocate("kotlin", "$packageName.shaded.kotlin")
-    this.relocate("sh.miles.pineapple", "$packageName.shaded.pineapple")
+    this.relocate("kotlin", "$packageName.libs.kotlin")
+    this.relocate("sh.miles.pineapple", "$packageName.libs.pineapple")
 }
 
 tasks.test {

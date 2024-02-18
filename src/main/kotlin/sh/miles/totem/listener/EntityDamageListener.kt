@@ -5,7 +5,10 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityResurrectEvent
+import sh.miles.pineapple.function.Option.None
+import sh.miles.pineapple.function.Option.Some
 import sh.miles.totem.totem.TotemType
+import java.lang.IllegalStateException
 import java.util.UUID
 
 @Suppress("UnstableApiUsage")
@@ -23,14 +26,14 @@ class EntityDamageListener : Listener {
         if (!TotemType.hasTotemType(entity)) return
 
         val damageSource = event.damageSource
-        val totem = TotemType.getType(entity)
-        totem.ifPresent { totemType ->
-            if (totemType.settings.blockedType.contains(damageSource.damageType)) {
-                if (totemType.trigger(entity, true)) event.isCancelled = true
+        when (val totemBundle = TotemType.getEquippedTotems(entity)) {
+            is Some -> {
+                val bundle = totemBundle.some()
+                bundle.tryTriggerStored(damageSource.damageType, entity, true)
             }
 
-            if (!event.isCancelled) {
-                noSavior.add(entity.uniqueId)
+            is None -> {
+                throw IllegalStateException("Totem type was clearly found but a totem bundle could not be gathered this is a bug!")
             }
         }
     }

@@ -16,8 +16,13 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import sh.miles.pineapple.PineappleLib
 import sh.miles.pineapple.collection.registry.RegistryKey
+import sh.miles.pineapple.function.Option
+import sh.miles.pineapple.function.Option.None
+import sh.miles.pineapple.function.Option.Some
 import sh.miles.totem.registry.TotemTypeRegistry
+import sh.miles.totem.util.InventoryUtils
 import java.util.Optional
+import java.util.stream.Collectors
 
 class TotemType(private val key: NamespacedKey, val settings: TotemSettings, item: ItemStack) :
     RegistryKey<NamespacedKey> {
@@ -35,11 +40,7 @@ class TotemType(private val key: NamespacedKey, val settings: TotemSettings, ite
         return this.item.clone()
     }
 
-    fun trigger(entity: LivingEntity, consume: Boolean): Boolean {
-        val slot = getTotemEquipmentSlot(
-            entity.equipment ?: error("Unexpected error totem was found but entity has no equipment?")
-        ) ?: error("Unexpected error totem was found but entity has no totem equipped?")
-
+    fun trigger(entity: LivingEntity, slot: EquipmentSlot, consume: Boolean): Boolean {
         val event = EntityResurrectEvent(entity, slot)
         Bukkit.getPluginManager().callEvent(event)
         if (event.isCancelled) {
@@ -74,51 +75,69 @@ class TotemType(private val key: NamespacedKey, val settings: TotemSettings, ite
         private val TYPE_KEY = NamespacedKey.fromString("totem:totem-type")!!
         private val TOTEM_ADVANCEMENT = NamespacedKey.minecraft("adventure/totem_of_undying")
 
-        fun hasTotemType(entity: LivingEntity): Boolean {
-            val equipment = entity.equipment ?: return false
-            val equipmentSlot = getTotemEquipmentSlot(equipment) ?: return false
-
-            val item = equipment.getItem(equipmentSlot)
-            if (item.type.isAir) return false
-
-            val container = item.itemMeta!!.persistentDataContainer
-            return container.has(TYPE_KEY)
+        fun getEquippedTotems(entity: LivingEntity): Option<TotemBundle> {
+            val equipment = entity.equipment ?: return Option.none()
+            val target = InventoryUtils.getEquipmentSlotsWithTarget(Material.TOTEM_OF_UNDYING, equipment)
+            return Option.some(TotemBundle(target.stream().map {
+                return@map Pair(it, getType(equipment.getItem(it)))
+            }.filter { it.second is Some }.map { Pair(it.first, it.second.orThrow()) }
+                .collect(Collectors.toUnmodifiableList())))
         }
 
-        fun getType(entity: LivingEntity): Optional<TotemType> {
-            val slot = getTotemEquipmentSlot(entity.equipment ?: return Optional.empty<TotemType>())
-                ?: return Optional.empty<TotemType>()
-            return getType(entity.equipment!!.getItem(slot))
-        }
-
-        fun getType(item: ItemStack): Optional<TotemType> {
+        fun getType(item: ItemStack): Option<TotemType> {
             if (item.type.isAir) {
-                return Optional.empty()
+                return Option.none()
             }
 
             val container = item.itemMeta!!.persistentDataContainer
             if (!container.has(TYPE_KEY)) {
-                return Optional.empty()
+                return Option.none()
             }
 
             val key = NamespacedKey.fromString(container.get(TYPE_KEY, PersistentDataType.STRING)!!)!!
-            return TotemTypeRegistry.get(key)
+            return Option.some(TotemTypeRegistry.getOrNull(key) ?: return Option.none())
         }
 
-        private fun getTotemEquipmentSlot(equipment: EntityEquipment): EquipmentSlot? {
-            if (equipment.itemInMainHand.type == Material.TOTEM_OF_UNDYING) {
-                return EquipmentSlot.HAND
-            } else if (equipment.itemInOffHand.type == Material.TOTEM_OF_UNDYING) {
-                return EquipmentSlot.OFF_HAND
+        fun hasTotemType(entity: LivingEntity): Boolean {
+            val equipment = entity.equipment ?: return false
+            val equipmentSlots = InventoryUtils.getEquipmentSlotsWithTarget(Material.TOTEM_OF_UNDYING, equipment)
+            if (equipmentSlots.isEmpty()) {
+                return false
             }
 
-            return null
+            for (equipmentSlot in equipmentSlots) {
+                val item = equipment.getItem(equipmentSlot)
+                if (item.type.isAir) continue
+
+                val container = item.itemMeta!!.persistentDataContainer
+                return container.has(TYPE_KEY)
+            }
+
+            return false
         }
     }
 
 
     override fun getKey(): NamespacedKey {
         return key
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is TotemType) return false
+
+        if (key != other.key) return false
+        if (settings != other.settings) return false
+        if (item != other.item) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = key.hashCode()
+        result = 31 * result + settings.hashCode()
+        result = 31 * result + item.hashCode()
+        return result
     }
 
 }
