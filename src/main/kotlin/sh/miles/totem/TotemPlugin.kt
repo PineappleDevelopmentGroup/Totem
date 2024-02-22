@@ -5,13 +5,8 @@ import sh.miles.pineapple.PineappleLib
 import sh.miles.pineapple.command.CommandRegistry
 import sh.miles.pineapple.json.JsonHelper
 import sh.miles.totem.command.TotemCommand
-import sh.miles.totem.json.NamespacedKeyAdapter
-import sh.miles.totem.json.PotionEffectAdapter
 import sh.miles.totem.json.TotemSettingsAdapter
 import sh.miles.totem.json.TotemTypeAdapter
-import sh.miles.totem.json.keyed.DamageTypeAdapter
-import sh.miles.totem.json.keyed.ParticleAdapter
-import sh.miles.totem.json.keyed.PotionEffectTypeAdapter
 import sh.miles.totem.listener.EntityDamageListener
 import sh.miles.totem.registry.TotemSettingsRegistry
 import sh.miles.totem.registry.TotemTypeRegistry
@@ -23,11 +18,6 @@ class TotemPlugin : JavaPlugin() {
     }
 
     val jhelper = JsonHelper(
-        DamageTypeAdapter,
-        ParticleAdapter,
-        PotionEffectTypeAdapter,
-        NamespacedKeyAdapter,
-        PotionEffectAdapter,
         TotemSettingsAdapter,
         TotemTypeAdapter
     )

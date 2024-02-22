@@ -8,7 +8,7 @@ import java.util.Arrays
 import java.util.function.Supplier
 import java.util.stream.Collectors
 
-private const val FILE_NAME: String = "totem-types.json"
+private const val FILE_NAME: String = "totem-data.json"
 
 object TotemTypeRegistry : FrozenRegistry<TotemType, NamespacedKey>(Supplier {
     return@Supplier Arrays.stream(

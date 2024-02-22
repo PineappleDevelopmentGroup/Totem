@@ -38,7 +38,7 @@ tasks.shadowJar {
     archiveFileName = "${project.name}-${project.version}.jar"
 
     val packageName = "${project.group}.${project.name.lowercase()}"
-    this.relocate("kotlin", "$packageName.libs.kotlin")
+    this.relocate("kotlin", "$packageName.shaded.kotlin")
     this.relocate("sh.miles.pineapple", "$packageName.libs.pineapple")
 }
 
@@ -66,4 +66,3 @@ if (debugLibraries) {
         resolutionStrategy.cacheChangingModulesFor(0, "seconds")
     }
 }
-
