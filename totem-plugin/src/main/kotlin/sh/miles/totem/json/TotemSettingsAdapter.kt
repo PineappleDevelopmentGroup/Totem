@@ -5,12 +5,12 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
-import org.bukkit.NamespacedKey
 import org.bukkit.damage.DamageType
 import org.bukkit.potion.PotionEffect
 import sh.miles.pineapple.json.JsonAdapter
+import sh.miles.totem.api.TotemSettings
+import sh.miles.totem.api.impl.TotemSettingsImpl
 import sh.miles.totem.registry.TotemSettingsRegistry
-import sh.miles.totem.totem.TotemSettings
 import java.lang.reflect.Type
 
 object TotemSettingsAdapter : JsonAdapter<TotemSettings> {
@@ -21,12 +21,12 @@ object TotemSettingsAdapter : JsonAdapter<TotemSettings> {
 
     override fun deserialize(element: JsonElement, type: Type, context: JsonDeserializationContext): TotemSettings {
         if (element is JsonPrimitive) {
-            return TotemSettingsRegistry.get(context.deserialize(element, NamespacedKey::class.java)).orElseThrow()
+            return TotemSettingsRegistry.get(element.asString).orElseThrow()
         }
 
         val parent = element.asJsonObject;
         verify(parent, "id", null)
-        val id = context.deserialize<NamespacedKey>(parent.get("id"), NamespacedKey::class.java)
+        val id = parent.get("id").asString
         verify(parent, "damage-types", id)
         val damageTypes =
             context.deserialize<Array<DamageType>>(parent.get("damage-types"), Array<DamageType>::class.java)
@@ -38,8 +38,9 @@ object TotemSettingsAdapter : JsonAdapter<TotemSettings> {
             return@deserializeOrDefault arrayOf()
         })
         val standardEffects = if (parent.has("standard-effects")) parent.get("standard-effects").asBoolean else true
-        return TotemSettings(
-            id, damageTypes.toList(), givenEffects.toList(), standardEffects
+        val playParticles = if (parent.has("play-particles")) parent.get("play-particles").asBoolean else true
+        return TotemSettingsImpl(
+            id, damageTypes.toSet(), givenEffects.toSet(), standardEffects, playParticles
         )
     }
 
@@ -60,7 +61,7 @@ object TotemSettingsAdapter : JsonAdapter<TotemSettings> {
         return emptyT.invoke()
     }
 
-    private fun verify(parent: JsonObject, path: String, id: NamespacedKey?) {
+    private fun verify(parent: JsonObject, path: String, id: String?) {
         if (!parent.has(path)) {
             error("no such path $path exists when parsing parent object, error occurred at ${id ?: "unknown"} instead found fields ${parent.asMap().keys}")
         }

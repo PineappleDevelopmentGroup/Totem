@@ -5,7 +5,7 @@ import org.bukkit.inventory.EntityEquipment
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 
-object InventoryUtils {
+object TotemInventoryUtils {
 
     fun getEquipmentSlotsWithTarget(material: Material, equipment: EntityEquipment): List<EquipmentSlot> {
         return entityEquipmentContents(equipment).stream().filter { it.second.type == material }.map { it.first }

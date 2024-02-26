@@ -2,14 +2,15 @@ package sh.miles.totem
 
 import org.bukkit.plugin.java.JavaPlugin
 import sh.miles.pineapple.PineappleLib
-import sh.miles.pineapple.command.CommandRegistry
 import sh.miles.pineapple.json.JsonHelper
+import sh.miles.totem.api.TotemApi
+import sh.miles.totem.api.impl.TotemApiImpl
 import sh.miles.totem.command.TotemCommand
+import sh.miles.totem.json.TotemItemAdapter
 import sh.miles.totem.json.TotemSettingsAdapter
-import sh.miles.totem.json.TotemTypeAdapter
 import sh.miles.totem.listener.EntityDamageListener
+import sh.miles.totem.registry.TotemItemRegistry
 import sh.miles.totem.registry.TotemSettingsRegistry
-import sh.miles.totem.registry.TotemTypeRegistry
 import java.io.File
 
 class TotemPlugin : JavaPlugin() {
@@ -17,24 +18,26 @@ class TotemPlugin : JavaPlugin() {
         lateinit var plugin: TotemPlugin
     }
 
-    val jhelper = JsonHelper(
+    val jsonHelper = JsonHelper(
         TotemSettingsAdapter,
-        TotemTypeAdapter
+        TotemItemAdapter,
     )
 
     override fun onEnable() {
         plugin = this
-        PineappleLib.initialize(this, true)
-        saveResources()
-        PineappleLib.getConfigurationManager().createStaticReloadable(File(dataFolder, "config.yml"), TotemConfig::class.java)
+        PineappleLib.initialize(this)
+        PineappleLib.getCommandRegistry().registerInternalCommands()
+        TotemApi.setApiInstance(TotemApiImpl())
 
-        val commands = CommandRegistry(this)
-        commands.register(TotemCommand())
+        PineappleLib.getConfigurationManager().createDefault(File(plugin.dataFolder, "config.yml"), TotemConfig::class.java)
+        saveResources()
 
         TotemSettingsRegistry.run { }
-        TotemTypeRegistry.run { }
+        TotemItemRegistry.run { }
 
         server.pluginManager.registerEvents(EntityDamageListener(), this)
+
+        PineappleLib.getCommandRegistry().register(TotemCommand())
     }
 
     override fun onDisable() {
@@ -43,6 +46,6 @@ class TotemPlugin : JavaPlugin() {
 
     private fun saveResources() {
         saveResource(TotemSettingsRegistry.TOTEM_SETTINGS_NAME, false)
-        saveResource(TotemTypeRegistry.TOTEM_TYPES_FILE_NAME, false)
+        saveResource(TotemItemRegistry.TOTEM_ITEMS_NAME, false)
     }
 }

@@ -11,10 +11,8 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT") { isChanging = true }
-    implementation("sh.miles:Pineapple:1.0.0-SNAPSHOT") {
-        isChanging = true
-    }
-    implementation(kotlin("stdlib"))
+    implementation("sh.miles:Pineapple:1.0.0-SNAPSHOT") { isChanging = true }
+    bukkitLibrary(kotlin("stdlib"))
     implementation(project(":totem-api"))
 }
 
@@ -27,9 +25,9 @@ tasks.test {
 }
 
 bukkit {
-    name = project.name
-    version = project.version.toString()
-    main = "sh.miles.${project.name.lowercase()}.${project.name}Plugin"
+    name = rootProject.name
+    version = rootProject.version.toString()
+    main = "sh.miles.${rootProject.name.lowercase()}.${rootProject.name}Plugin"
     apiVersion = "1.20" // LATEST
 }
 

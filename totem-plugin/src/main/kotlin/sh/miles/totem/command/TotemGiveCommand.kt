@@ -1,14 +1,13 @@
 package sh.miles.totem.command
 
-import org.bukkit.NamespacedKey
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import sh.miles.pineapple.command.Command
 import sh.miles.pineapple.command.CommandLabel
 import sh.miles.totem.TotemConfig
-import sh.miles.totem.registry.TotemTypeRegistry
+import sh.miles.totem.registry.TotemItemRegistry
 
-internal class TotemGiveCommand : Command(CommandLabel("give", "totem.command.give")) {
+class TotemGiveCommand: Command(CommandLabel("give", "totem.command.give")) {
 
     override fun execute(sender: CommandSender, args: Array<out String>): Boolean {
         if (sender !is Player) {
@@ -21,13 +20,13 @@ internal class TotemGiveCommand : Command(CommandLabel("give", "totem.command.gi
             return true;
         }
 
-        val totemType = TotemTypeRegistry.get(NamespacedKey.fromString(args[0])!!)
+        val totemType = TotemItemRegistry.get(args[0])
         if (totemType.isEmpty) {
             sender.spigot().sendMessage(TotemConfig.TOTEM_TYPE_NOT_EXISTS.component(mapOf("totem-type" to args[0])))
             return true;
         }
 
-        sender.inventory.addItem(totemType.orElseThrow().item())
+        sender.inventory.addItem(totemType.orElseThrow().icon)
         sender.spigot().sendMessage(
             TotemConfig.TOTEM_GIVE_SUCCESS.component(
                 mapOf(
@@ -41,7 +40,7 @@ internal class TotemGiveCommand : Command(CommandLabel("give", "totem.command.gi
 
     override fun complete(sender: CommandSender, args: Array<out String>): MutableList<String> {
         if (args.size == 1) {
-            return TotemTypeRegistry.keys().stream().map { it.toString() }.toList()
+            return TotemItemRegistry.keys().stream().map { it.toString() }.toList()
         }
 
         return mutableListOf()

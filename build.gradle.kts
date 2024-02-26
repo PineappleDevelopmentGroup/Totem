@@ -16,7 +16,6 @@ tasks.shadowJar {
     archiveFileName = "${project.name}-${project.version}.jar"
 
     val packageName = "${project.group}.${project.name.lowercase()}"
-    this.relocate("kotlin", "$packageName.libs.kotlin")
     this.relocate("sh.miles.pineapple", "$packageName.libs.pineapple")
 }
 
@@ -24,9 +23,9 @@ tasks.build {
     dependsOn(tasks.shadowJar)
 }
 
-if (debugLibraries) {
-    subprojects.forEach {
-        it.configurations.all {
+subprojects {
+    if (debugLibraries) {
+        configurations.all {
             resolutionStrategy.cacheChangingModulesFor(0, "seconds")
         }
     }
