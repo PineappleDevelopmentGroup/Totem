@@ -1,7 +1,7 @@
 [
   {
-    "id": "totem:totem_of_fire",
-    "settings": "totem:fire_totem_settings",
+    "id": "totem_of_fire",
+    "settings": "fire_totem_settings",
     "item": {
       "item_type": "TOTEM_OF_UNDYING",
       "name": "<italic:!><gradient:#E0AD20:#EE4432>Totem of Fire",
@@ -11,8 +11,8 @@
     }
   },
   {
-    "id": "totem:totem_of_water",
-    "settings": "totem:water_totem_settings",
+    "id": "totem_of_water",
+    "settings": "water_totem_settings",
     "item": {
       "item_type": "TOTEM_OF_UNDYING",
       "name": "<italic:!><gradient:#464BB3:#6DE0ED>Totem of Water",
@@ -22,8 +22,8 @@
     }
   },
   {
-    "id": "totem:totem_of_magic",
-    "settings": "totem:magic_totem_settings",
+    "id": "totem_of_magic",
+    "settings": "magic_totem_settings",
     "item": {
       "item_type": "TOTEM_OF_UNDYING",
       "name": "<italic:!><gradient:#AF0587:#FF0051>Totem of Magic",
@@ -34,8 +34,8 @@
     }
   },
   {
-    "id": "totem:totem_of_gravity",
-    "settings": "totem:gravity_totem_settings",
+    "id": "totem_of_gravity",
+    "settings": "gravity_totem_settings",
     "item": {
       "item_type": "TOTEM_OF_UNDYING",
       "name": "<italic:!><gradient:#031CE3:#2EFF00>Totem of Gravity",

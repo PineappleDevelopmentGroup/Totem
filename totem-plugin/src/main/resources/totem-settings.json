@@ -1,6 +1,6 @@
 [
   {
-    "id": "totem:fire_totem_settings",
+    "id": "fire_totem_settings",
     "damage-types": [
       "in_fire",
       "hot_floor",
@@ -19,7 +19,7 @@
     "standard-effects": true
   },
   {
-    "id": "totem:water_totem_settings",
+    "id": "water_totem_settings",
     "damage-types": [
       "drown"
     ],
@@ -31,7 +31,7 @@
     ]
   },
   {
-    "id": "totem:magic_totem_settings",
+    "id": "magic_totem_settings",
     "damage-types": [
       "indirect_magic",
       "magic",
@@ -57,7 +57,7 @@
     "standard-effects": false
   },
   {
-    "id": "totem:gravity_totem_settings",
+    "id": "gravity_totem_settings",
     "damage-types": [
       "fall",
       "falling_anvil",

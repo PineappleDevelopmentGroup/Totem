@@ -1,0 +1,55 @@
+[
+  {
+    "key": "totem_of_fire_recipe",
+    "recipe_type": "shaped",
+    "result": "totem_of_fire",
+    "shape": [
+      "L","B","L",
+      "M","C","M",
+      "O","H","O"
+    ],
+    "ingredients": {
+      "L": "lava_bucket",
+      "M": "magma_block",
+      "O": {
+        "item_type": "obsidian"
+      },
+      "C": "carved_pumpkin",
+      "H": "hay_block",
+      "B": "blaze_rod"
+    }
+  },
+  {
+    "key": "totem_of_water_recipe",
+    "recipe_type": "shapeless",
+    "result": "totem_of_water",
+    "ingredients": [
+      "water_bucket",
+      "diamond",
+      "carved_pumpkin",
+      "hay_block"
+    ]
+  },
+  {
+    "key": "totem_of_magic_recipe",
+    "recipe_type": "shapeless",
+    "result": "totem_of_magic",
+    "ingredients": [
+      "fermented_spider_eye",
+      "glistering_melon_slice",
+      "carved_pumpkin",
+      "hay_block"
+    ]
+  },
+  {
+    "key": "totem_of_gravity_recipe",
+    "recipe_type": "shapeless",
+    "result": "totem_of_gravity",
+    "ingredients": [
+      "leather_boots",
+      "slime_block",
+      "carved_pumpkin",
+      "hay_block"
+    ]
+  }
+]

@@ -1,5 +1,7 @@
 package sh.miles.totem
 
+import org.bukkit.Bukkit
+import org.bukkit.inventory.Recipe
 import org.bukkit.plugin.java.JavaPlugin
 import sh.miles.pineapple.PineappleLib
 import sh.miles.pineapple.json.JsonHelper
@@ -7,6 +9,7 @@ import sh.miles.totem.api.TotemApi
 import sh.miles.totem.api.impl.TotemApiImpl
 import sh.miles.totem.command.TotemCommand
 import sh.miles.totem.json.TotemItemAdapter
+import sh.miles.totem.json.TotemRecipeAdapter
 import sh.miles.totem.json.TotemSettingsAdapter
 import sh.miles.totem.listener.EntityDamageListener
 import sh.miles.totem.registry.TotemItemRegistry
@@ -21,6 +24,7 @@ class TotemPlugin : JavaPlugin() {
     val jsonHelper = JsonHelper(
         TotemSettingsAdapter,
         TotemItemAdapter,
+        TotemRecipeAdapter
     )
 
     override fun onEnable() {
@@ -29,11 +33,13 @@ class TotemPlugin : JavaPlugin() {
         PineappleLib.getCommandRegistry().registerInternalCommands()
         TotemApi.setApiInstance(TotemApiImpl())
 
-        PineappleLib.getConfigurationManager().createDefault(File(plugin.dataFolder, "config.yml"), TotemConfig::class.java)
+        PineappleLib.getConfigurationManager()
+            .createDefault(File(plugin.dataFolder, "config.yml"), TotemConfig::class.java)
         saveResources()
 
         TotemSettingsRegistry.run { }
         TotemItemRegistry.run { }
+        jsonHelper.asArray(this, "totem-recipes.json", Array<Recipe>::class.java).forEach { Bukkit.addRecipe(it) }
 
         server.pluginManager.registerEvents(EntityDamageListener(), this)
 
@@ -47,5 +53,6 @@ class TotemPlugin : JavaPlugin() {
     private fun saveResources() {
         saveResource(TotemSettingsRegistry.TOTEM_SETTINGS_NAME, false)
         saveResource(TotemItemRegistry.TOTEM_ITEMS_NAME, false)
+        saveResource("totem-recipes.json", false)
     }
 }

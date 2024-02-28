@@ -7,7 +7,7 @@ import java.util.Arrays
 import java.util.function.Supplier
 import java.util.stream.Collectors
 
-private const val FILE_NAME: String = "totem-data.json"
+private const val FILE_NAME: String = "totem-items.json"
 
 object TotemItemRegistry : WriteableRegistry<TotemItem, String>(Supplier {
     return@Supplier Arrays.stream(
