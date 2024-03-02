@@ -1,5 +1,7 @@
 package sh.miles.totem
 
+import org.bstats.bukkit.Metrics
+import org.bstats.charts.SimplePie
 import org.bukkit.Bukkit
 import org.bukkit.inventory.Recipe
 import org.bukkit.plugin.java.JavaPlugin
@@ -14,6 +16,7 @@ import sh.miles.totem.json.TotemSettingsAdapter
 import sh.miles.totem.listener.EntityDamageListener
 import sh.miles.totem.registry.TotemItemRegistry
 import sh.miles.totem.registry.TotemSettingsRegistry
+import sh.miles.totem.util.VersionUtil
 import java.io.File
 
 class TotemPlugin : JavaPlugin() {
@@ -44,6 +47,9 @@ class TotemPlugin : JavaPlugin() {
         server.pluginManager.registerEvents(EntityDamageListener(), this)
 
         PineappleLib.getCommandRegistry().register(TotemCommand())
+
+        val metrics = Metrics(this, 21203)
+        metrics.addCustomChart(SimplePie("online_mode", VersionUtil::getOnlineMode))
     }
 
     override fun onDisable() {

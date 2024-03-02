@@ -14,6 +14,7 @@ dependencies {
     implementation("sh.miles:Pineapple:1.0.0-SNAPSHOT") { isChanging = true }
     bukkitLibrary(kotlin("stdlib"))
     implementation(project(":totem-api"))
+    implementation("org.bstats:bstats-bukkit:3.0.2")
 }
 
 tasks.compileKotlin {

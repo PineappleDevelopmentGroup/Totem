@@ -17,6 +17,7 @@ tasks.shadowJar {
 
     val packageName = "${project.group}.${project.name.lowercase()}"
     this.relocate("sh.miles.pineapple", "$packageName.libs.pineapple")
+    this.relocate("org.bstats", "$packageName.libs.bstats")
 }
 
 tasks.build {
