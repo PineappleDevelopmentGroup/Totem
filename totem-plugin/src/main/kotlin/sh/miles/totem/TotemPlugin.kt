@@ -7,6 +7,8 @@ import org.bukkit.inventory.Recipe
 import org.bukkit.plugin.java.JavaPlugin
 import sh.miles.pineapple.PineappleLib
 import sh.miles.pineapple.json.JsonHelper
+import sh.miles.pineapple.updater.SimpleSemVersion
+import sh.miles.pineapple.updater.UpdateChecker
 import sh.miles.totem.api.TotemApi
 import sh.miles.totem.api.impl.TotemApiImpl
 import sh.miles.totem.command.TotemCommand
@@ -50,6 +52,14 @@ class TotemPlugin : JavaPlugin() {
 
         val metrics = Metrics(this, 21203)
         metrics.addCustomChart(SimplePie("online_mode", VersionUtil::getOnlineMode))
+
+        UpdateChecker(this, 115382).getVersion { spigotVersion ->
+            if (SimpleSemVersion.fromString(spigotVersion).isNewerThan(SimpleSemVersion.fromString(this.description.version))) {
+                val logger = logger
+                logger.info("Your version of totem is out of date, please download the latest for new features and bug fixes")
+                logger.info("Download here: https://www.spigotmc.org/resources/totem.115382/")
+            }
+        }
     }
 
     override fun onDisable() {
