@@ -5,7 +5,7 @@ plugins {
 rootProject.name = "Totem"
 
 gradle.rootProject {
-    this.version = "1.0.0-SNAPSHOT"
+    this.version = "1.1.0-SNAPSHOT"
     this.group = "sh.miles"
 }
 

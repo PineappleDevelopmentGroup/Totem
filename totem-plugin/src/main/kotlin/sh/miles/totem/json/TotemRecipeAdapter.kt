@@ -7,6 +7,8 @@ import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
+import org.bukkit.inventory.BlastingRecipe
+import org.bukkit.inventory.FurnaceRecipe
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
 import org.bukkit.inventory.RecipeChoice
@@ -14,6 +16,7 @@ import org.bukkit.inventory.RecipeChoice.ExactChoice
 import org.bukkit.inventory.RecipeChoice.MaterialChoice
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.inventory.ShapelessRecipe
+import org.bukkit.inventory.SmokingRecipe
 import sh.miles.pineapple.json.JsonAdapter
 import sh.miles.totem.registry.TotemItemRegistry
 import java.lang.reflect.Type
@@ -55,6 +58,9 @@ object TotemRecipeAdapter : JsonAdapter<Recipe> {
         return when (recipeType) {
             RecipeType.SHAPED -> createShaped(parent, context, key, result)
             RecipeType.SHAPELESS -> createShapeless(parent, context, key, result)
+            RecipeType.FURNACE -> createFurnaceLike(parent, context, key, result, ::FurnaceRecipe)
+            RecipeType.BLAST_FURNACE -> createFurnaceLike(parent, context, key, result, ::BlastingRecipe)
+            RecipeType.SMOKER -> createFurnaceLike(parent, context, key, result, ::SmokingRecipe)
         }
     }
 
@@ -93,6 +99,21 @@ object TotemRecipeAdapter : JsonAdapter<Recipe> {
         return recipe
     }
 
+    private fun createFurnaceLike(parent: JsonObject, context: JsonDeserializationContext, key: NamespacedKey, result: ItemStack, builder: (NamespacedKey, ItemStack, RecipeChoice, Float, Int) -> Recipe): Recipe {
+        val input = readChoice(parent.get("input") ?: throw IllegalArgumentException("A furnace recipe must have an input!"), context)
+        val cookTime = if (parent.has("cook_time")) parent.get("cook_time").asFloat else 100f
+        val experience = if (parent.has("experience")) parent.get("experience").asInt else 10
+        return builder.invoke(key, result, input, cookTime, experience)
+    }
+
+    private fun readChoice(element: JsonElement, context: JsonDeserializationContext): RecipeChoice {
+        return if (element is JsonPrimitive) { // Assume material
+            MaterialChoice(Material.matchMaterial(element.asString))
+        } else {
+            ExactChoice(context.deserialize<ItemStack>(element, ItemStack::class.java))
+        }
+    }
+
     private fun readChoice(key: Char, parent: JsonObject, context: JsonDeserializationContext): RecipeChoice {
         if (!parent.has(key.toString())) {
             throw IllegalArgumentException("The character $key is not mapped so its recipe choice could not be read")
@@ -108,7 +129,10 @@ object TotemRecipeAdapter : JsonAdapter<Recipe> {
 
     enum class RecipeType {
         SHAPED,
-        SHAPELESS;
+        SHAPELESS,
+        FURNACE,
+        BLAST_FURNACE,
+        SMOKER;
 
         companion object {
             fun fromString(str: String): RecipeType {
