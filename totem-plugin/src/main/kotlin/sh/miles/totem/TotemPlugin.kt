@@ -26,15 +26,14 @@ class TotemPlugin : JavaPlugin() {
         lateinit var plugin: TotemPlugin
     }
 
-    val jsonHelper = JsonHelper(
-        TotemSettingsAdapter,
-        TotemItemAdapter,
-        TotemRecipeAdapter
-    )
+    lateinit var jsonHelper: JsonHelper
 
     override fun onEnable() {
         plugin = this
         PineappleLib.initialize(this)
+        this.jsonHelper = JsonHelper(
+            TotemSettingsAdapter, TotemItemAdapter, TotemRecipeAdapter
+        )
         PineappleLib.getCommandRegistry().registerInternalCommands()
         TotemApi.setApiInstance(TotemApiImpl())
 
@@ -54,7 +53,9 @@ class TotemPlugin : JavaPlugin() {
         metrics.addCustomChart(SimplePie("online_mode", VersionUtil::getOnlineMode))
 
         UpdateChecker(this, 115382).getVersion { spigotVersion ->
-            if (SimpleSemVersion.fromString(spigotVersion).isNewerThan(SimpleSemVersion.fromString(this.description.version))) {
+            if (SimpleSemVersion.fromString(spigotVersion)
+                    .isNewerThan(SimpleSemVersion.fromString(this.description.version))
+            ) {
                 val logger = logger
                 logger.info("Your version of totem is out of date, please download the latest for new features and bug fixes")
                 logger.info("Download here: https://www.spigotmc.org/resources/totem.115382/")

@@ -20,9 +20,4 @@ object TotemConfig {
     @JvmStatic
     @ConfigPath("totem-give-success")
     var TOTEM_GIVE_SUCCESS = PineappleChat.component("<green>given totem <\$totem-type> to <\$player-name>")!!
-
-    @JvmStatic
-    @ConfigPath("totem-menu.title")
-    var TOTEM_MENU_TILE = PineappleChat.component("<gray>Totem Menu")!!
-
 }
