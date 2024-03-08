@@ -1,4 +1,4 @@
-package sh.miles.totem.command
+package sh.miles.totem.ui.command
 
 import sh.miles.pineapple.command.Command
 import sh.miles.pineapple.command.CommandLabel

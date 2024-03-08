@@ -11,13 +11,14 @@ import sh.miles.pineapple.updater.SimpleSemVersion
 import sh.miles.pineapple.updater.UpdateChecker
 import sh.miles.totem.api.TotemApi
 import sh.miles.totem.api.impl.TotemApiImpl
-import sh.miles.totem.command.TotemCommand
 import sh.miles.totem.json.TotemItemAdapter
-import sh.miles.totem.json.TotemRecipeAdapter
 import sh.miles.totem.json.TotemSettingsAdapter
+import sh.miles.totem.json.recipe.TotemRecipeAdapter
 import sh.miles.totem.listener.EntityDamageListener
 import sh.miles.totem.registry.TotemItemRegistry
+import sh.miles.totem.registry.TotemRecipeRegistry
 import sh.miles.totem.registry.TotemSettingsRegistry
+import sh.miles.totem.ui.command.TotemCommand
 import sh.miles.totem.util.VersionUtil
 import java.io.File
 
@@ -43,7 +44,11 @@ class TotemPlugin : JavaPlugin() {
 
         TotemSettingsRegistry.run { }
         TotemItemRegistry.run { }
-        jsonHelper.asArray(this, "totem-recipes.json", Array<Recipe>::class.java).forEach { Bukkit.addRecipe(it) }
+        TotemRecipeRegistry.run {
+            for (key in keys()) {
+                Bukkit.addRecipe(get(key).orElseThrow().recipe)
+            }
+        }
 
         server.pluginManager.registerEvents(EntityDamageListener(), this)
 
@@ -70,6 +75,6 @@ class TotemPlugin : JavaPlugin() {
     private fun saveResources() {
         saveResource(TotemSettingsRegistry.TOTEM_SETTINGS_NAME, false)
         saveResource(TotemItemRegistry.TOTEM_ITEMS_NAME, false)
-        saveResource("totem-recipes.json", false)
+        saveResource(TotemRecipeRegistry.TOTEM_RECIPES_NAME, false)
     }
 }
