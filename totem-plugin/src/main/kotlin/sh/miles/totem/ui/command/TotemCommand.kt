@@ -7,6 +7,7 @@ class TotemCommand : Command(CommandLabel("totem", "totem.command")) {
 
     init {
         registerSubcommand(TotemGiveCommand())
+        registerSubcommand(TotemMenuCommand())
     }
 
 }

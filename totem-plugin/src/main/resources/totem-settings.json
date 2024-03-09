@@ -1,68 +1,88 @@
 [
   {
-    "id": "fire_totem_settings",
+    "id": "totem_of_pvp_settings",
     "damage-types": [
-      "in_fire",
-      "hot_floor",
-      "lava"
-    ],
-    "given-effects": [
-      {
-        "type": "fire_resistance",
-        "duration": 1200,
-        "amplifier": 0,
-        "ambient": true,
-        "particles": true,
-        "icon": true
-      }
-    ],
-    "standard-effects": true
-  },
-  {
-    "id": "water_totem_settings",
-    "damage-types": [
-      "drown"
-    ],
-    "given-effects": [
-      {
-        "type": "water_breathing",
-        "duration": 2400
-      }
-    ]
-  },
-  {
-    "id": "magic_totem_settings",
-    "damage-types": [
-      "indirect_magic",
-      "magic",
-      "sonic_boom",
-      "wither_skull"
+      "player_explosion",
+      "player_attack"
     ],
     "given-effects": [
       {
         "type": "regeneration",
-        "duration": 250,
+        "duration": 60,
         "amplifier": 2
+      },
+      {
+        "type": "saturation",
+        "duration": 1200
+      },
+      {
+        "type": "glowing",
+        "duration": 80
       },
       {
         "type": "resistance",
-        "duration": 600,
-        "amplifier": 2
-      },
-      {
-        "type": "invisibility",
-        "duration": 1200
+        "duration": 600
       }
     ],
     "standard-effects": false
   },
   {
-    "id": "gravity_totem_settings",
+    "id": "totem_of_falling_settings",
     "damage-types": [
-      "fall",
-      "falling_anvil",
-      "falling_block",
-      "falling_stalactite"
+      "fall"
+    ],
+    "given-effects": [
+      {
+        "type": "slowness",
+        "duration": 1200,
+        "amplifier": 1
+      }
+    ],
+    "standard-effects": false
+  },
+  {
+    "id": "totem_of_void_settings",
+    "damage-types": [
+      "out_of_world"
+    ],
+    "given-effects": [
+      {
+        "type": "levitation",
+        "duration": 2400
+      }
+    ]
+  },
+  {
+    "id": "totem_of_gluttony_settings",
+    "damage-types": [
+      "starve"
+    ],
+    "given-effects": [
+      {
+        "type": "saturation",
+        "duration": 1800
+      },
+      {
+        "type": "weakness",
+        "duration": 2400
+      },
+      {
+        "type": "slowness",
+        "duration": 2400
+      }
+    ],
+    "standard-effects": false
+  },
+  {
+    "id": "totem_of_friction_settings",
+    "damage-types": [
+      "fly_into_wall"
+    ],
+    "given-effects": [
+      {
+        "type": "darkness",
+        "duration": 200
+      }
     ]
   }
 ]

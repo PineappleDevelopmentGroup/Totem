@@ -1,52 +1,53 @@
 [
   {
-    "key": "totem_of_fire_recipe",
-    "recipe_type": "shaped",
-    "result": "totem_of_fire",
-    "shape": [
-      "L","B","L",
-      "M","C","M",
-      "O","H","O"
-    ],
-    "ingredients": {
-      "L": "lava_bucket",
-      "M": "magma_block",
-      "O": {
-        "item_type": "obsidian"
-      },
-      "C": "carved_pumpkin",
-      "H": "hay_block",
-      "B": "blaze_rod"
-    }
-  },
-  {
-    "key": "totem_of_water_recipe",
-    "recipe_type": "furnace",
-    "result": "totem_of_water",
-    "cook_time": 100,
-    "experience": 10,
-    "input": "water_bucket"
-  },
-  {
-    "key": "totem_of_magic_recipe",
+    "key": "totem_of_pvp_recipe",
     "recipe_type": "shapeless",
-    "result": "totem_of_magic",
+    "result": "totem_of_pvp",
     "ingredients": [
-      "fermented_spider_eye",
-      "glistering_melon_slice",
-      "carved_pumpkin",
-      "hay_block"
+      "end_crystal",
+      "golden_carrot",
+      "golden_apple"
     ]
   },
   {
-    "key": "totem_of_gravity_recipe",
+    "key": "totem_of_falling_recipe",
+    "recipe_type": "shaped",
+    "result": "totem_of_falling",
+    "shape": [
+      "F", "M", "F",
+      "F", "B", "F",
+      "F", "M", "F"
+    ],
+    "ingredients": {
+      "F": "feather",
+      "M": "phantom_membrane",
+      "B": "leather_boots"
+    }
+  },
+  {
+    "key": "totem_of_void_recipe",
+    "recipe_type": "blast_furnace",
+    "result": "totem_of_void",
+    "input": "dragon_breath",
+    "cook_time": 4800,
+    "experience": 5
+  },
+  {
+    "key": "totem_of_gluttony_recipe",
+    "recipe_type": "smoker",
+    "result": "totem_of_gluttony",
+    "input": "pufferfish",
+    "cook_time": 4800,
+    "experience": 1.2
+  },
+  {
+    "key": "totem_of_friction_recipe",
     "recipe_type": "shapeless",
-    "result": "totem_of_gravity",
+    "result": "totem_of_friction",
     "ingredients": [
-      "leather_boots",
-      "slime_block",
+      "blue_ice",
       "carved_pumpkin",
-      "hay_block"
+      "ender_pearl"
     ]
   }
 ]

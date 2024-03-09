@@ -1,46 +1,56 @@
 [
   {
-    "id": "totem_of_fire",
-    "settings": "fire_totem_settings",
+    "id": "totem_of_pvp",
+    "settings": "totem_of_pvp_settings",
     "item": {
       "item_type": "TOTEM_OF_UNDYING",
-      "name": "<italic:!><gradient:#E0AD20:#EE4432>Totem of Fire",
+      "name": "<italic:!><color:#A82203>Totem of PvP",
       "lore": [
-        "<color:gray>as death consumes you your skin will harden and the pain will fade"
+        "<color:#A82203>Come back with vengeance"
       ]
     }
   },
   {
-    "id": "totem_of_water",
-    "settings": "water_totem_settings",
+    "id": "totem_of_falling",
+    "settings": "totem_of_falling_settings",
     "item": {
       "item_type": "TOTEM_OF_UNDYING",
-      "name": "<italic:!><gradient:#464BB3:#6DE0ED>Totem of Water",
+      "name": "<italic:!><gradient:#DDDBDB:#7C7978>Totem of Falling",
       "lore": [
-        "<color:gray>on the brink of death you will feel your lungs fill with air"
+        "<color:gray>Does not guarantee that your legs will be healed immediately"
       ]
     }
   },
   {
-    "id": "totem_of_magic",
-    "settings": "magic_totem_settings",
+    "id": "totem_of_void",
+    "settings": "totem_of_void_settings",
     "item": {
       "item_type": "TOTEM_OF_UNDYING",
-      "name": "<italic:!><gradient:#AF0587:#FF0051>Totem of Magic",
+      "name": "<italic:!><gradient:#BED1EE:#262626>Totem of the Void",
       "lore": [
-        "<color:gray>undoubtedly even an experienced mage won't expect you to recover with such wounds.",
-        "<color:gray>you may feel a cloak form around you to protect you from their vision"
+        "The void is not forgiving"
       ]
     }
   },
   {
-    "id": "totem_of_gravity",
-    "settings": "gravity_totem_settings",
+    "id": "totem_of_gluttony",
+    "settings": "totem_of_gluttony_settings",
     "item": {
       "item_type": "TOTEM_OF_UNDYING",
-      "name": "<italic:!><gradient:#031CE3:#2EFF00>Totem of Gravity",
+      "name": "<italic:!><color:#D5AD11>Totem of Gluttony",
       "lore": [
-        "<color:gray>gravity is not forgiving, but this just once it will let you continue on your journey"
+        "<color:#DD6711>Known to sap your strength"
+      ]
+    }
+  },
+  {
+    "id": "totem_of_friction",
+    "settings": "totem_of_friction_settings",
+    "item": {
+      "item_type": "TOTEM_OF_UNDYING",
+      "name": "<italic:!><color:#11DD77>Totem of Friction",
+      "lore": [
+        "<color:gray>Friction not included"
       ]
     }
   }
