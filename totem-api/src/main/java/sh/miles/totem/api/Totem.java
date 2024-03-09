@@ -29,6 +29,15 @@ public interface Totem {
     WriteableRegistry<TotemItem, String> getTotemItemRegistry();
 
     /**
+     * Gets the totem recipe registry
+     *
+     * @return the totem item registry
+     * @since 1.2.0-SNAPSHOT
+     */
+    @NotNull
+    WriteableRegistry<TotemRecipe, String> getTotemRecipeRegistry();
+
+    /**
      * Creates a TotemItem Builder
      *
      * @return the totem item builder

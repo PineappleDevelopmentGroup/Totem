@@ -1,4 +1,4 @@
-package sh.miles.totem.command
+package sh.miles.totem.ui.command
 
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player

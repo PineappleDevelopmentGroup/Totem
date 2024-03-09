@@ -1,6 +1,7 @@
 package sh.miles.totem
 
 import sh.miles.pineapple.chat.PineappleChat
+import sh.miles.pineapple.chat.PineappleComponent
 import sh.miles.pineapple.config.annotation.ConfigPath
 
 object TotemConfig {
@@ -20,4 +21,12 @@ object TotemConfig {
     @JvmStatic
     @ConfigPath("totem-give-success")
     var TOTEM_GIVE_SUCCESS = PineappleChat.component("<green>given totem <\$totem-type> to <\$player-name>")!!
+
+    @JvmStatic
+    @ConfigPath("totem-menu.title")
+    var TOTEM_MENU_TITLE = PineappleChat.component("<gray>Totem Viewer")!!
+
+    @JvmStatic
+    @ConfigPath("totem-menu.recipe-title")
+    var TOTEM_RECIPE_MENU_TITLE = PineappleChat.component("<gray><\$totem-type> Recipe Viewer")!!
 }
