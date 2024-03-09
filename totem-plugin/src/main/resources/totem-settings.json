@@ -48,9 +48,16 @@
     "given-effects": [
       {
         "type": "levitation",
-        "duration": 2400
+        "duration": 300,
+        "amplifier": 20
+      },
+      {
+        "type": "regeneration",
+        "duration": 250,
+        "amplifier": 10
       }
-    ]
+    ],
+    "standard-effects": true
   },
   {
     "id": "totem_of_gluttony_settings",
