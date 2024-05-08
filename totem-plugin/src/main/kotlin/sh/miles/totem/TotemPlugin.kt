@@ -3,23 +3,26 @@ package sh.miles.totem
 import org.bstats.bukkit.Metrics
 import org.bstats.charts.SimplePie
 import org.bukkit.Bukkit
-import org.bukkit.inventory.Recipe
 import org.bukkit.plugin.java.JavaPlugin
 import sh.miles.pineapple.PineappleLib
 import sh.miles.pineapple.json.JsonHelper
 import sh.miles.pineapple.updater.SimpleSemVersion
 import sh.miles.pineapple.updater.UpdateChecker
+import sh.miles.pineapple.util.serialization.Serialized
+import sh.miles.pineapple.util.serialization.adapter.SerializedAdapter
+import sh.miles.pineapple.util.serialization.adapter.SerializedAdapterRegistry
+import sh.miles.pineapple.util.serialization.bridges.gson.GsonSerializedBridge
 import sh.miles.totem.api.TotemApi
 import sh.miles.totem.api.impl.TotemApiImpl
-import sh.miles.totem.json.TotemItemAdapter
-import sh.miles.totem.json.TotemSettingsAdapter
-import sh.miles.totem.json.recipe.TotemRecipeAdapter
 import sh.miles.totem.listener.EntityDamageListener
 import sh.miles.totem.registry.TotemItemRegistry
 import sh.miles.totem.registry.TotemRecipeRegistry
 import sh.miles.totem.registry.TotemSettingsRegistry
 import sh.miles.totem.ui.command.TotemCommand
 import sh.miles.totem.util.VersionUtil
+import sh.miles.totem.util.serialized.TotemItemAdapter
+import sh.miles.totem.util.serialized.TotemSettingsAdapter
+import sh.miles.totem.util.serialized.recipe.TotemRecipeAdapter
 import java.io.File
 
 class TotemPlugin : JavaPlugin() {
@@ -32,9 +35,12 @@ class TotemPlugin : JavaPlugin() {
     override fun onEnable() {
         plugin = this
         PineappleLib.initialize(this)
-        this.jsonHelper = JsonHelper(
-            TotemSettingsAdapter, TotemItemAdapter, TotemRecipeAdapter
-        )
+        this.jsonHelper = JsonHelper { builder ->
+            SerializedAdapterRegistry.INSTANCE.register(TotemItemAdapter)
+            SerializedAdapterRegistry.INSTANCE.register(TotemRecipeAdapter)
+            SerializedAdapterRegistry.INSTANCE.register(TotemSettingsAdapter)
+            SerializedAdapterRegistry.INSTANCE.registerBridge(GsonSerializedBridge(builder))
+        }
         PineappleLib.getCommandRegistry().registerInternalCommands()
         TotemApi.setApiInstance(TotemApiImpl())
 
@@ -46,7 +52,7 @@ class TotemPlugin : JavaPlugin() {
         TotemItemRegistry.run { }
         TotemRecipeRegistry.run {
             for (key in keys()) {
-                Bukkit.addRecipe(get(key).orElseThrow().recipe)
+                Bukkit.addRecipe(get(key).orThrow().recipe)
             }
         }
 

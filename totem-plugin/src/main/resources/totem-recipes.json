@@ -38,7 +38,7 @@
     "result": "totem_of_gluttony",
     "input": "pufferfish",
     "cook_time": 4800,
-    "experience": 1.2
+    "experience": 1
   },
   {
     "key": "totem_of_friction_recipe",

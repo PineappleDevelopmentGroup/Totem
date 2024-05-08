@@ -11,9 +11,9 @@ dependencies {
 }
 
 tasks.shadowJar {
-    this.archiveClassifier = ""
-    this.archiveVersion = ""
-    archiveFileName = "${project.name}-${project.version}.jar"
+    this.archiveClassifier.set("")
+    this.archiveVersion.set("")
+    this.archiveFileName.set("${project.name}-${project.version}.jar")
 
     val packageName = "${project.group}.${project.name.lowercase()}"
     this.relocate("sh.miles.pineapple", "$packageName.libs.pineapple")

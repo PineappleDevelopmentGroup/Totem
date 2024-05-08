@@ -48,7 +48,7 @@ class TotemMenu(player: Player) : PlayerGui<MenuScene>({
             }
         }
         for ((index, key) in TotemItemRegistry.keys().withIndex()) {
-            val item = TotemItemRegistry.get(key).orElseThrow()
+            val item = TotemItemRegistry.get(key).orThrow()
             slot(index) {
                 val slot = SimpleGuiSlot(it, index) { event ->
                     event.isCancelled = true

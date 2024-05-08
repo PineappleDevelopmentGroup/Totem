@@ -1,25 +1,24 @@
-package sh.miles.totem.json.recipe
+package sh.miles.totem.util.serialized.recipe
 
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonObject
 import org.bukkit.NamespacedKey
-import org.bukkit.inventory.Recipe
 import org.bukkit.inventory.ShapelessRecipe
 import sh.miles.pineapple.PineappleLib
+import sh.miles.pineapple.util.serialization.SerializedDeserializeContext
+import sh.miles.pineapple.util.serialization.SerializedObject
 import sh.miles.totem.api.TotemItem
 import sh.miles.totem.api.TotemRecipe
 import sh.miles.totem.api.impl.TotemRecipeImpl
 
 object ShapelessRecipeParser : RecipeParser {
     override fun recipeTime(
-        parent: JsonObject,
+        parent: SerializedObject,
         key: NamespacedKey,
         result: TotemItem,
-        context: JsonDeserializationContext
+        context: SerializedDeserializeContext
     ): TotemRecipe {
         val shapeless = ShapelessRecipe(key, result.icon)
         val ingredients = PineappleLib.getAnomalyFactory().create()
-            .run { parent.getAsJsonArray("ingredients") }
+            .run { parent.getArray("ingredients").orThrow() }
             .message("A Shapeless recipe must have an ingredients array!")
             .hard(javaClass, "recipeTime").orThrow()
 

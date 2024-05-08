@@ -1,28 +1,27 @@
-package sh.miles.totem.json.recipe
+package sh.miles.totem.util.serialized.recipe
 
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonElement
-import com.google.gson.JsonSerializationContext
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.BlastingRecipe
 import org.bukkit.inventory.FurnaceRecipe
 import org.bukkit.inventory.SmokingRecipe
 import sh.miles.pineapple.PineappleLib
-import sh.miles.pineapple.json.JsonAdapter
+import sh.miles.pineapple.util.serialization.SerializedDeserializeContext
+import sh.miles.pineapple.util.serialization.SerializedElement
+import sh.miles.pineapple.util.serialization.SerializedSerializeContext
+import sh.miles.pineapple.util.serialization.adapter.SerializedAdapter
 import sh.miles.totem.api.TotemRecipe
 import sh.miles.totem.registry.TotemItemRegistry
-import java.lang.reflect.Type
 
-object TotemRecipeAdapter : JsonAdapter<TotemRecipe> {
+object TotemRecipeAdapter : SerializedAdapter<TotemRecipe> {
 
-    override fun serialize(p0: TotemRecipe, p1: Type, p2: JsonSerializationContext): JsonElement {
+    override fun serialize(recipe: TotemRecipe, context: SerializedSerializeContext): SerializedElement {
         throw IllegalArgumentException("Not currently supported!")
     }
 
-    override fun deserialize(element: JsonElement, type: Type, context: JsonDeserializationContext): TotemRecipe {
-        val parent = element.asJsonObject
+    override fun deserialize(element: SerializedElement, context: SerializedDeserializeContext): TotemRecipe {
+        val parent = element.asObject
         val recipeType = PineappleLib.getAnomalyFactory().create()
-            .run { RecipeType.fromString(parent.get("recipe_type").asString) }
+            .run { RecipeType.fromString(parent.getPrimitive("recipe_type").orThrow().asString) }
             .message(
                 "The given recipe_type must be one of the following ${
                     RecipeType.entries.map { it.name }.toTypedArray()
@@ -31,24 +30,20 @@ object TotemRecipeAdapter : JsonAdapter<TotemRecipe> {
             .hard(javaClass, "deserialize").orThrow()
 
         val totemResult = PineappleLib.getAnomalyFactory().create()
-            .run { TotemItemRegistry.getOrNull(parent.get("result").asString)!! }
+            .run { TotemItemRegistry.getOrNull(parent.getPrimitive("result").orThrow().asString)!! }
             .message("The totem of type ${parent.get("result")} does not exist!")
             .hard(javaClass, "deserialize").orThrow()
 
         val key = PineappleLib.getAnomalyFactory().create()
-            .run { NamespacedKey.fromString("totem:" + parent.get("key").asString)!! }
+            .run { NamespacedKey.fromString("totem:" + parent.getPrimitive("key").orThrow().asString)!! }
             .message("Could not find key field for totem recipe! This field is REQUIRED")
             .hard(javaClass, "deserialize").orThrow()
 
         return recipeType.parser.recipeTime(parent, key, totemResult, context)
     }
 
-    override fun getAdapterType(): Class<TotemRecipe> {
+    override fun getKey(): Class<*> {
         return TotemRecipe::class.java
-    }
-
-    override fun isHierarchy(): Boolean {
-        return true
     }
 
     enum class RecipeType(val parser: RecipeParser) {

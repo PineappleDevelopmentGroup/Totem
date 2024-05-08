@@ -5,13 +5,14 @@ plugins {
 rootProject.name = "Totem"
 
 gradle.rootProject {
-    this.version = "1.2.0-SNAPSHOT"
+    this.version = "1.3.0-SNAPSHOT"
     this.group = "sh.miles"
 }
 
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
+        mavenLocal()
         maven("https://maven.miles.sh/libraries")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
         maven("https://repo.papermc.io/repository/maven-public/")

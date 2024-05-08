@@ -34,7 +34,7 @@ class EntityDamageListener : Listener {
                     val key = equipment.getItem(it).itemMeta!!.persistentDataContainer.get(
                         TotemItemImpl.ITEM_KEY, PersistentDataType.STRING
                     )!!
-                    return@map Pair(it, TotemItemRegistry.get(key).orElseThrow())
+                    return@map Pair(it, TotemItemRegistry.get(key).orThrow())
                 }.filter { it.second.settings.blockTypes.contains(damageType) }.findFirst()
 
         // TODO: refactor. Maybe add trigger to API?
